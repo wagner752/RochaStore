@@ -1,9 +1,9 @@
-/*
+
 window.onload = () => {
     const modal = new bootstrap.Modal(document.getElementById("whatsappModal"));
     modal.show();
   };
-*/
+
 
 // Função para verificar se a loja está aberta
 function verificarStatusLoja() {
@@ -112,7 +112,7 @@ function removeFromCart(productId) {
 
 // Função para finalizar o pedido
 function finalizeOrder() {
-    alert("Pedido finalizado! Agradecemos a sua compra.");
+    alert("Pedido finalizado! Confirme o pedido no WhatsApp com a loja.");
     checkout(cart);
     cart = [];  // Limpa o carrinho após finalização
     renderCart();  // Atualiza a exibição do carrinho
@@ -173,26 +173,32 @@ function initializeCarousel(products) {
     });
 
     const updateCarouselView = () => {
+        const isMobile = window.innerWidth < 768; // Define um breakpoint para dispositivos móveis
+        const itemsPerView = isMobile ? 1 : 3; // Mostra 1 item no mobile, 3 em telas maiores
+    
         const startIndex = currentPosition * itemsPerView;
         const endIndex = startIndex + itemsPerView;
         const cards = Array.from(carousel.children);
-
+    
         cards.forEach((card, index) => {
             card.style.display = index >= startIndex && index < endIndex ? 'block' : 'none';
         });
     };
+    
 
     // Atualiza a visualização inicial
     updateCarouselView();
 
-    // Botões de navegação
     prevBtn.addEventListener('click', () => {
         currentPosition = Math.max(currentPosition - 1, 0);
         updateCarouselView();
     });
-
+    
     nextBtn.addEventListener('click', () => {
+        const isMobile = window.innerWidth < 768; // Verifica se está em mobile
+        const itemsPerView = isMobile ? 1 : 3; // Define o número de itens por página
         const maxPosition = Math.ceil(products.length / itemsPerView) - 1;
+    
         currentPosition = Math.min(currentPosition + 1, maxPosition);
         updateCarouselView();
     });
@@ -288,35 +294,61 @@ function  secaoMaquiagem(products) {
 
 
 
+let savedWhatsAppNumber = ""; // Variável global para armazenar o número do WhatsApp
+
 function saveWhatsAppNumber() {
-    whatsappNumber = document.getElementById("whatsappNumber").value.trim();
-    if (!whatsappNumber) {
-      alert("Por favor, insira um número válido.");
-      return;
-    }
-    const modal = bootstrap.Modal.getInstance(document.getElementById("whatsappModal"));
-    modal.hide();
+  let whatsappNumber = document.getElementById("whatsappNumber").value.trim();
+  
+  // Verifica se o número foi preenchido
+  if (!whatsappNumber) {
+    alert("Por favor, insira um número.");
+    return;
   }
+
+  // Regex para validar o formato: +55 +DDD (sem 0) +Número
+  const whatsappNumberPattern = /^\+55\d{2}\d{8,9}$/;
+
+  // Verifica se o número corresponde ao padrão
+  if (!whatsappNumberPattern.test(whatsappNumber)) {
+    alert("Por favor, insira um número válido no formato: +55 +DDD +Número (Exemplo: +5584991652870).");
+    return;
+  }
+
+  // Salva o número na variável global
+  savedWhatsAppNumber = whatsappNumber;
+
+  // Fecha o modal se o número for válido
+  const modal = bootstrap.Modal.getInstance(document.getElementById("whatsappModal"));
+  modal.hide();
+
+  alert("Número de WhatsApp salvo com sucesso!");
+}
 
 function checkout(cart) {
-    if (!whatsappNumber) {
-      alert("Por favor, configure o número de WhatsApp antes de finalizar o pedido.");
-      return;
-    }
-  
-    let message = "Olá, gostaria de fazer um pedido, fiz a seleção pelo site desses itens:%0A";
-    cart.forEach((item) => {
-      message += `- ${item.name} (x${item.quantity}): R$ ${(item.price * item.quantity).toFixed(2)}%0A`;
-    });
-  
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    message += `%0ATotal: R$ ${total.toFixed(2)}`;
-  
-    message += '%0AAguardo seu retorno';
-
-    const url = `https://wa.me/${whatsappNumber}?text=${message}`;
-    window.open(url, "_blank");
+  // Verifica se o número do WhatsApp foi configurado
+  if (!savedWhatsAppNumber) {
+    alert("Por favor, configure o número de WhatsApp antes de finalizar o pedido.");
+    return;
   }
+
+  // Mensagem padrão para o WhatsApp
+  let message = "Olá, gostaria de fazer um pedido, fiz a seleção pelo site desses itens:%0A";
+  
+  // Adiciona os itens do carrinho à mensagem
+  cart.forEach((item) => {
+    message += `- ${item.name} (x${item.quantity}): R$ ${(item.price * item.quantity).toFixed(2)}%0A`;
+  });
+
+  // Calcula o total
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  message += `%0ATotal: R$ ${total.toFixed(2)}`;
+
+  message += "%0AAguardo seu retorno";
+
+  // Cria o link do WhatsApp com o número e a mensagem
+  const url = `https://wa.me/${savedWhatsAppNumber.replace('+', '')}?text=${message}`;
+  window.open(url, "_blank");
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     const products = await fetchProductsFromGoogleSheets('https://docs.google.com/spreadsheets/d/e/2PACX-1vS2VP2o7HF3OPrFIwMYL3tkT673vZ4gQOUhSn9G8-z0apAhm1r0b07hoF9wZW_U51ct5B-I5LaZ9ySE/pub?gid=0&single=true&output=csv');
