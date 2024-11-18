@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Fundo preto */
+    color: #fff; /* Texto branco */
+    font-family: Arial, sans-serif;
+}
+
+.navbar{
+    position: fixed;
+    width: 100%;
+    background-color: #000000;
+  z-index: 1;
+}
+
+.navbar-dark .nav-link {
+    color: #fff; /* Links em branco */
+}
+
+.navbar-dark .nav-link:hover {
+    color: #ddd; /* Efeito hover nos links */
+}
+
+.hero-section {
+    height: 50vh; /* Metade da altura do navegador */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000; /* Fundo da seção inicial */
+    text-align: center;
+}
+
+.hero-logo {
+    max-width: 150px;
+    max-height: 150px;
+    margin-bottom: 1rem;
+    border-radius: 10px; /* Suaviza as bordas da imagem */
+}
+
+.StatusLoja {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    color: white;
+    margin-top: 1rem;
+    text-align: center;
+    width: fit-content;
+}
+
+.promocoes-section {
+    padding: 2rem 1rem;
+    background-color: #221222;
+    color: #fff;
+}
+
+.promocoes-section h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.product-card {
+    flex: 0 0 calc(33.33% - 1rem); /* 3 produtos por vez */
+    background-color: #221222;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.product-card h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.product-card .price {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.product-card button {
+    background: rgb(0,0,0);
+background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(114,51,113,1) 0%, rgba(230,129,227,1) 100%);
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-card button:hover {
+    background-color: #000000;
+}
+
+.carousel-btn {
+    background-color: #723371;
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-btn:hover {
+    background-color: #000000;
+}
+
+
+/* Geral */
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 80%;
+}
+
+/* Estilo dos cartões de produto */
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Input de quantidade */
+.product-card .quantity-input {
+    width: 60px;
+    margin-right: 5px;
+}
+
+.cart-items-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.cart-items-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cart-items-list li button {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+
+.cart-section {
+    position: fixed; /* Fixado na tela */
+    bottom: 1rem; /* Distância do rodapé */
+    right: 1rem; /* Distância da lateral direita */
+    width: 300px; /* Largura padrão */
+    background-color: #ffffff; /* Cor de fundo */
+    border: 1px solid rgb(0, 0, 0); /* Borda */
+    padding: 15px; /* Espaçamento interno */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para destaque */
+    color: black; /* Cor do texto */
+    font-size: 0.7rem;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+}
+
+#cart-container.collapsed {
+    max-height: 60px;
+    overflow: hidden;
+}
+
+#cart-content {
+    transition: all 0.3s ease;
+}
+
+.cart-section h3{
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1.2rem;
+}
+
+.cart-items-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.cart-items-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cart-items-list li button {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+/* Botões de limpar e finalizar */
+#clear-cart, #finalize-cart {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Mensagem quando o carrinho está vazio */
+.cart-items-list li {
+    text-align: center;
+}
+
+.perfumaria-feminina{
+    background-image: url(../img/Perfume\ Feminino.png);
+    background-size: 300px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: top;
+}
+
+.perfumaria-feminina .container {
+    display: flex;
+    justify-content: center;  /* Centraliza o conteúdo */
+    flex-wrap: wrap;  /* Permite que os itens se movam para a próxima linha, se necessário */
+    gap: 20px;  /* Espaço entre os itens */
+    
+}
+
+.perfumaria-feminina h2{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+
+.perfumaria-masculina .container {
+    display: flex;
+    justify-content: center;  /* Centraliza o conteúdo */
+    flex-wrap: wrap;  /* Permite que os itens se movam para a próxima linha, se necessário */
+    gap: 20px;  /* Espaço entre os itens */
+    
+}
+
+.perfumaria-masculina{
+    background-image: url(../img/Perfume\ Masculino.png);
+    background-size: 300px;
+    background-repeat: no-repeat;
+    background-position-x: left;
+    background-position-y: top;
+}
+
+.perfumaria-masculina h2{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.secaoMaquiagem .container {
+    display: flex;
+    justify-content: center;  /* Centraliza o conteúdo */
+    flex-wrap: wrap;  /* Permite que os itens se movam para a próxima linha, se necessário */
+    gap: 20px;  /* Espaço entre os itens */
+    
+}
+
+.secaoMaquiagem{
+    background-image: url(../img/Modelo.png);
+    background-size: 300px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: top;
+}
+
+.secaoMaquiagem h2{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.product-card {
+    flex: 1 1 22%;  /* Ajusta a largura para ter 4 itens por linha */
+    box-sizing: border-box;  /* Garante que o padding e margin não afetam o tamanho total */
+}
+
+
+@media (max-width: 768px) {
+    .cart-section {
+        bottom: 0; /* Alinha na parte inferior da tela */
+        right: 0; /* Remove a distância lateral */
+        width: 100%; /* Ocupa 100% da largura */
+        border-radius: 0; /* Remove as bordas arredondadas */
+        padding: 10px; /* Reduz o espaçamento interno */
+        border: none; /* Remove bordas */
+        box-shadow: none; /* Remove sombra para um design plano */
+    }
+
+    .product-card  {
+        flex: 0 0 100%; /* Exibe apenas 1 produto por vez */   
+    }
+    .perfumaria-feminina{
+        background-image: none;
+        background-color: black;
+    }
+
+    .perfumaria-feminina .product-card{
+    flex: 1 1 30%; /* 3 produtos por vez */
+    background-color: #221222;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .perfumaria-masculina{
+        background-image: none;
+        background-color: black;
+    }
+
+    .perfumaria-masculina .product-card{
+    flex: 1 1 30%; /* 3 produtos por vez */
+    background-color: #221222;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .secaoMaquiagem{
+        background-image: none;
+        background-color: black;
+    }
+
+    .secaoMaquiagem .product-card{
+    flex: 1 1 30%; /* 3 produtos por vez */
+    background-color: #221222;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+}
